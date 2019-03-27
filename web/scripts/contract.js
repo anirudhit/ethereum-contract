@@ -1,3 +1,4 @@
+var contractAddress = '0xdaA226433FeCFCf7208B463d79CdF73790d64997';
 if ( typeof web3 != 'undefined') {
     web3 = new Web3(web3.currentProvider);
 } else {
@@ -24,4 +25,17 @@ $('#contract-form').submit(function() {
         alert('You must send more than 0 ETH.');
         return;
     }
+});
+
+$('#get-balance-form').submit(function() {
+    event.preventDefault();
+
+    web3.eth.getBalance(contractAddress, function(error, result) {
+        if (error) {
+            console.log('error: ' + error);
+        } else {
+            console.log('balance:' + result);
+            $('#the-balance').html('<b>Current Balance:</b> ' + web3.utils.fromWei(result));
+        }
+    });
 });
